@@ -9,6 +9,14 @@
 #define MCU_BSP_INC_BSP_SPI_H_
 
 
+#define SCLK BIT5
+
+#define SOMI BIT6
+
+#define SIMO BIT7
+
+#define CS   BIT3
+
 
 
 
