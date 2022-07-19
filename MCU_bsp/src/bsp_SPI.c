@@ -10,33 +10,22 @@
 
 void spi_init(void)
 {
-	/**
-	 * From TIs users manual
-	 *
-     * The recommended USCI initialization/re-configuration process is:
- 	 * 1. Set UCSWRST (BIS.B #UCSWRST,&UCxCTL1)
- 	 * 2. 
- 	 * 3. 
- 	 * 4. 
- 	 * 5. 
- 	 */
-
-	// Set UCSWRST (BIS.B #UCSWRST,&UCxCTL1)
+	// 设置 UCSWRST (BIS.B #UCSWRST,&UCxCTL1)
 	UCB0CTL1 = UCSWRST;
 
-	// (2)Initialize all USCI registers with UCSWRST=1 (including UCxCTL1)
-    P1DIR  |= CS; 
-    P1OUT  |= CS;
-  	P1SEL  |= SOMI + SIMO + SCLK;
-  	P1SEL2 |= SOMI + SIMO + SCLK;
+	// (2)初始化所有USCI寄存器，UCSWRST=1（包括UCxCTL1）
+	P1DIR  |= CS;    //C
+	P1OUT  |= CS;
+	P1SEL  |= SOMI + SIMO + SCLK;
+	P1SEL2 |= SOMI + SIMO + SCLK;
 
-    // Configure ports
-    UCB0CTL0 |= UCCKPH + UCMSB + UCMST + UCSYNC; 
+	//配置端口
+	UCB0CTL0 |= UCCKPH + UCMSB + UCMST + UCSYNC; 
 	UCB0CTL1 |= UCSSEL_2;   // SMCLK
 
-	// Clear UCSWRST via software (BIC.B #UCSWRST,&UCxCTL1)
+	//通过软件清除 UCSWRST(BIC.B#UCSWRST,&UCxCTL1)
 	UCB0CTL1 &= ~UCSWRST; 
-	//Enable interrupts (optional) via UCxRXIE and/or UCxTXIE
+	//通过 UCxRXIE 和/或 UCxTXIE 启用中断（可选）
 	spi_csh();
 }
 
